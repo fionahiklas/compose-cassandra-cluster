@@ -5,11 +5,26 @@ machine. Internally, all of the nodes will be a part of the same Docker
 network and will form a cluster using that Docker network.
 
 ## Instructions ##
+
+### Getting Started ###
+
 In order to bring up the cluster:
 - Use `docker-compose up` to see the logs of all the containers
 - Use `docker-compose up -d` if you want it to run in the foreground
 
 In order to clean up the cluster, use `docker-compose down`
+
+### JMX ###
+
+This took a while to figure out, trying to connect to the 'local' JMX
+port, even when mapped in the docker-compose file, doesn't work.
+In the end the instructions 
+[here](https://docs.datastax.com/en/cassandra/3.0/cassandra/configuration/secureJmxAuthentication.html)
+gave some clues.  The trick is to add the 
+`cassandra.jmx.remote.port` property which then enables remote RMI
+connectivity.  Presumably Cassandra is using this to simplify 
+setting up the relevant javax/sun properties under the hood.
+
 
 ## Notes ##
 You need to make sure that the Docker daemon has enough of resources
@@ -34,4 +49,5 @@ discusses the implications of turning `cassandra.consistent.rangemovement`
 off.
 
 ### Credits ###
+- [Calvin's original cluster setup](https://github.com/calvinlfer/compose-cassandra-cluster) - this repo forked from that
 - [The Last Pickle](http://thelastpickle.com/blog)

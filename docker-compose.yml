@@ -20,7 +20,7 @@ services:
       - "1891:1891"   # Remote JMX
     environment:
       - "CASSANDRA_SEEDS=cassandra-seed-node"
-      - JVM_OPTS=-Dcassandra.jmx.remote.port=1892
+      - JVM_OPTS=-Dcassandra.jmx.remote.port=1891
     depends_on:
       - "cassandra-seed"
 

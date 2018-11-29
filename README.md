@@ -132,7 +132,6 @@ discusses the implications of turning `cassandra.consistent.rangemovement`off.
 - [Cassandra book](https://teddyma.gitbooks.io/learncassandra/content/index.html)
 
 
-
 ## Credits ##
 
 - [Calvin's original cluster setup](https://github.com/calvinlfer/compose-cassandra-cluster) - this repo forked from that

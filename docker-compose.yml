@@ -11,7 +11,7 @@ services:
       - "9160:9160"   # Thrift clients
       - "1890:1890"   # Remote JMX
     environment:
-       - JVM_OPTS=-Dcassandra.jmx.remote.port=1890
+       - JVM_OPTS=-Dcassandra.jmx.remote.port=1890 -Xmx1024
 
   cassandra-node-1:
     image: cassandra:3.11.0
@@ -20,7 +20,7 @@ services:
       - "1891:1891"   # Remote JMX
     environment:
       - "CASSANDRA_SEEDS=cassandra-seed-node"
-      - JVM_OPTS=-Dcassandra.jmx.remote.port=1891
+      - JVM_OPTS=-Dcassandra.jmx.remote.port=1891 -Xmx1024
     depends_on:
       - "cassandra-seed"
 
@@ -28,24 +28,24 @@ services:
   # cassandra.consistent.rangemovement is true so we further delay it to give it time to stabilize
   cassandra-node-2:
     image: cassandra:3.11.0
-    command: /bin/bash -c "echo 'Waiting for seed node' && sleep 80 && /docker-entrypoint.sh cassandra -f"
+    command: /bin/bash -c "echo 'Waiting for seed node' && sleep 120 && /docker-entrypoint.sh cassandra -f"
     ports:
     - "1892:1892"   # Remote JMX
     environment:
     - "CASSANDRA_SEEDS=cassandra-seed-node"
-    - JVM_OPTS=-Dcassandra.jmx.remote.port=1892
+    - JVM_OPTS=-Dcassandra.jmx.remote.port=1892 -Xmx1024
     depends_on:
     - "cassandra-seed"
 
-  # you cannot have multiple nodes join the cluster at the same time when
-  # cassandra.consistent.rangemovement is true so we further delay it to give it time to stabilize
-  cassandra-node-3:
-    image: cassandra:3.11.0
-    command: /bin/bash -c "echo 'Waiting for seed node' && sleep 80 && /docker-entrypoint.sh cassandra -f"
-    ports:
-    - "1893:1893"   # Remote JMX
-    environment:
-    - "CASSANDRA_SEEDS=cassandra-seed-node"
-    - JVM_OPTS=-Dcassandra.jmx.remote.port=1893
-    depends_on:
-    - "cassandra-seed"
+#  # you cannot have multiple nodes join the cluster at the same time when
+#  # cassandra.consistent.rangemovement is true so we further delay it to give it time to stabilize
+#  cassandra-node-3:
+#    image: cassandra:3.11.0
+#    command: /bin/bash -c "echo 'Waiting for seed node' && sleep 240 && /docker-entrypoint.sh cassandra -f"
+#    ports:
+#    - "1893:1893"   # Remote JMX
+#    environment:
+#    - "CASSANDRA_SEEDS=cassandra-seed-node"
+#    - JVM_OPTS=-Dcassandra.jmx.remote.port=1893
+#    depends_on:
+#    - "cassandra-seed"

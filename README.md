@@ -123,6 +123,13 @@ java.lang.UnsupportedOperationException: Other bootstrapping/leaving/moving node
 This [article](http://thelastpickle.com/blog/2017/05/23/auto-bootstrapping-part1.html)
 discusses the implications of turning `cassandra.consistent.rangemovement`off.
 
+The cassandra wrapper script calculates the values for heap size bases on the available memory.
+Running inside docker this is particularly a problem, well it was when I ran under a Linux VM with 8Gb allocated to it.
+I ended up with about 6Gb of swap being used.
+
+For now I've solved this issue by specifiying the heap settings but ideally the jvm.options files needs to be 
+updated to contain this values rather than them being passed into the containers from the environment.
+ 
 
 ## References ##
 

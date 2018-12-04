@@ -17,6 +17,7 @@ services:
     image: cassandra:3.11.0
     command: /bin/bash -c "echo 'Waiting for seed node' && sleep 30 && /docker-entrypoint.sh cassandra -f"
     ports:
+      - "9142:9042"   # Native transport
       - "1891:1891"   # Remote JMX
     environment:
       - "CASSANDRA_SEEDS=cassandra-seed-node"
@@ -30,6 +31,7 @@ services:
     image: cassandra:3.11.0
     command: /bin/bash -c "echo 'Waiting for seed node' && sleep 120 && /docker-entrypoint.sh cassandra -f"
     ports:
+    - "9242:9042"   # Native transport
     - "1892:1892"   # Remote JMX
     environment:
     - "CASSANDRA_SEEDS=cassandra-seed-node"
@@ -43,6 +45,7 @@ services:
     image: cassandra:3.11.0
     command: /bin/bash -c "echo 'Waiting for seed node' && sleep 240 && /docker-entrypoint.sh cassandra -f"
     ports:
+    - "9342:9042"   # Native transport
     - "1893:1893"   # Remote JMX
     environment:
     - "CASSANDRA_SEEDS=cassandra-seed-node"
